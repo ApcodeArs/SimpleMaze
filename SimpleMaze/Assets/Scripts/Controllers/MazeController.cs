@@ -1,73 +1,101 @@
+using Extensions;
 using Helpers;
 using Models;
 using UnityEngine;
 using Utils;
 
-public class MazeController : MonoBehaviourSingletonBase<MazeController> {
+namespace Controllers {
+
+    public class MazeController : MonoBehaviourSingletonBase<MazeController> {
     
-    [SerializeField]
-    private GameObject _cellPrefab;
-
-    [SerializeField]
-    private RectTransform _mazeParent;
-    
-    [SerializeField]
-    private Camera _camera;
-    
-    private Vector3 _cellSize = new Vector3(1.5f,1.5f,0);
-
-    [SerializeField]
-    private GameObject p1;
-    [SerializeField]
-    private GameObject p2;
-    [SerializeField]
-    private GameObject p3;
-    [SerializeField]
-    private GameObject p4;
-    
-    public void Init() {
-        var sa = Screen.safeArea;
+        [SerializeField] private Camera _camera;
+        [SerializeField] private RectTransform _mazeParent;
+        [SerializeField] private GameObject _cellPrefab;
         
-        p1.transform.position = _camera.ScreenToWorldPoint(sa.position);
-        p1.transform.position = new Vector3(p1.transform.position.x, p1.transform.position.y, -0.75f);
+        private int _mazeRowsCount;
+        private int _mazeColumnsCount;
         
-        p2.transform.position = _camera.ScreenToWorldPoint(sa.position + new Vector2(sa.width, 0.0f));
-        p2.transform.position = new Vector3(p2.transform.position.x, p2.transform.position.y, -0.75f);
+        private GameObject[,] _cells;
         
-        p3.transform.position = _camera.ScreenToWorldPoint(sa.position + new Vector2(0.0f, sa.height));
-        p3.transform.position = new Vector3(p3.transform.position.x, p3.transform.position.y, -0.75f);
+        private Vector3 _cellSize;
+        private Vector3 _cellOffset;
         
-        p4.transform.position = _camera.ScreenToWorldPoint(sa.position + new Vector2(sa.width, sa.height));
-        p4.transform.position = new Vector3(p4.transform.position.x, p4.transform.position.y, -0.75f);
+        public void Init() {
+            var safeAreaWorldData = new SafeAreaWorldData(_camera);
+            
+            CalculateCellSize();
+            CalculateMazeSize(safeAreaWorldData);
+            
+            InitMazeParent(safeAreaWorldData);
+            
+            CalculateCellOffset();
+            
+            InitMaze();
+        }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        var safeAreaWorldWidth = p2.transform.position.x - p1.transform.position.x;
-        var safeAreaWorldHeight = p3.transform.position.y - p1.transform.position.y;
+        private void CalculateCellSize() {
+            _cellSize = _cellPrefab.transform.localScale;
+        }
         
-        var cellColumns = Mathf.FloorToInt(safeAreaWorldWidth / _cellSize.x);
-        var cellRows =  Mathf.FloorToInt(safeAreaWorldHeight / _cellSize.y);
+        private void CalculateMazeSize(SafeAreaWorldData safeAreaWorldData) {
+            _mazeColumnsCount = Mathf.FloorToInt(safeAreaWorldData.Width / _cellSize.x);
+            _mazeRowsCount = Mathf.FloorToInt(safeAreaWorldData.Height / _cellSize.y);
+        }
         
-        _mazeParent.sizeDelta = new Vector2((cellColumns - 1) * _cellSize.x, (cellRows - 1) * _cellSize.y);;
+        private void InitMazeParent(SafeAreaWorldData safeAreaWorldData) {
+            //-1 due to fake cells
+            _mazeParent.sizeDelta = new Vector2(_cellSize.x * (_mazeColumnsCount - 1), _cellSize.y * (_mazeRowsCount - 1));
+            
+            _mazeParent.transform.position = new Vector3(safeAreaWorldData.MinPoint.x, safeAreaWorldData.MinPoint.y, 0.0f) + 
+                                             new Vector3(safeAreaWorldData.Width / 2, safeAreaWorldData.Height / 2, 0.0f);
+        }
 
-
-        /*var deltaY = safeAreaWorldHeight / 2 - _mazeParent.sizeDelta.y / 2;*/
-
-        _mazeParent.transform.position = p1.transform.position
-                                         + new Vector3(safeAreaWorldWidth / 2, safeAreaWorldHeight / 2, 0.0f);
-                                         /*+ new Vector3(0.0f, - deltaY, 0.0f);*/
+        private void CalculateCellOffset() {
+            var mazeParentSize = _mazeParent.sizeDelta;
+            _cellOffset = _mazeParent.transform.position + new Vector3(-mazeParentSize.x / 2f, -mazeParentSize.y / 2f);
+        }
         
-        var cells = MazeGenerator.Generate(cellColumns, cellRows);
+        private void InitMaze() {
+            var cellsData = MazeGenerator.Generate(_mazeColumnsCount, _mazeRowsCount);
 
-        var shifting = _mazeParent.transform.position + new Vector3(-_mazeParent.sizeDelta.x / 2f, -_mazeParent.sizeDelta.y / 2f);
+            var isCreateNew = CreateCellsIfNeeded();
 
-        for (var x = 0; x < cellColumns; x++) {
-            for (var y = 0; y < cellRows; y++) {
-                var position = shifting + new Vector3(x * _cellSize.x, y * _cellSize.y, y * _cellSize.z);
-                var cellGameObject = Instantiate(_cellPrefab, position, Quaternion.identity, _mazeParent.transform);
-        
-                var cell = cellGameObject.GetComponent<Cell>();
-                cell.Init(cells[x, y]);
+            if (isCreateNew) {
+                _cells.Loop((x, y) => {
+                    InitNewCell(x, y, cellsData[x, y]);
+                });
             }
+            else {
+                _cells.Loop((x, y) => {
+                    InitCell(_cells[x, y], cellsData[x, y]);
+                });
+            }
+        }
+
+        private bool CreateCellsIfNeeded() {
+            if (_cells != null) {
+                return false;
+            }
+            
+            _cells = new GameObject[_mazeColumnsCount,_mazeRowsCount];
+            
+            return true;
+        }
+
+        //todo improve
+        private void InitNewCell(int x, int y, MazeGeneratorCell cellData) {
+            var position = _cellOffset + new Vector3(x * _cellSize.x, y * _cellSize.y, 0.0f);
+            var cellGameObject = Instantiate(_cellPrefab, position, Quaternion.identity, _mazeParent.transform);
+                    
+            InitCell(cellGameObject, cellData);
+                    
+            _cells[x, y] = cellGameObject;
+        }
+        
+        //todo improve
+        private void InitCell(GameObject cellGameObject, MazeGeneratorCell cellData) {
+            var cell = cellGameObject.GetComponent<Cell>();
+            cell.Init(cellData);
         }
     }
 }
