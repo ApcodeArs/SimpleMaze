@@ -19,12 +19,16 @@ namespace Controllers {
         
         private Vector3 _cellSize;
         private Vector3 _cellOffset;
+
+        private MazeGenerator _mazeGenerator;
         
         public void Init() {
             var safeAreaWorldData = new SafeAreaWorldData(_camera);
             
             CalculateCellSize();
             CalculateMazeSize(safeAreaWorldData);
+            
+            _mazeGenerator = new MazeGenerator(_mazeColumnsCount, _mazeRowsCount);
             
             InitMazeParent(safeAreaWorldData);
             
@@ -56,18 +60,18 @@ namespace Controllers {
         }
         
         private void InitMaze() {
-            var cellsData = MazeGenerator.Generate(_mazeColumnsCount, _mazeRowsCount);
+            var maze = _mazeGenerator.Generate();
 
             var isCreateNew = CreateCellsIfNeeded();
 
             if (isCreateNew) {
                 _cells.Loop((x, y) => {
-                    InitNewCell(x, y, cellsData[x, y]);
+                    InitNewCell(x, y, maze.Cells[x, y]);
                 });
             }
             else {
                 _cells.Loop((x, y) => {
-                    InitCell(_cells[x, y], cellsData[x, y]);
+                    InitCell(_cells[x, y], maze.Cells[x, y]);
                 });
             }
         }
@@ -83,7 +87,7 @@ namespace Controllers {
         }
 
         //todo improve
-        private void InitNewCell(int x, int y, MazeGeneratorCell cellData) {
+        private void InitNewCell(int x, int y, MazeCellData cellData) {
             var position = _cellOffset + new Vector3(x * _cellSize.x, y * _cellSize.y, 0.0f);
             var cellGameObject = Instantiate(_cellPrefab, position, Quaternion.identity, _mazeParent.transform);
                     
@@ -93,8 +97,8 @@ namespace Controllers {
         }
         
         //todo improve
-        private void InitCell(GameObject cellGameObject, MazeGeneratorCell cellData) {
-            var cell = cellGameObject.GetComponent<Cell>();
+        private void InitCell(GameObject cellGameObject, MazeCellData cellData) {
+            var cell = cellGameObject.GetComponent<MazeCell>();
             cell.Init(cellData);
         }
     }
