@@ -11,8 +11,8 @@ namespace Controllers {
         public void LoadLevel() {
             BackgroundController.Instance.Init();
             MazeController.Instance.GenerateMaze();
-            HolesController.Instance.Init();
             BallSpawnController.Instance.SpawnOnStart();
+            HolesController.Instance.Init();
         }
         
         private void PrepareGame() {

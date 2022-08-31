@@ -9,7 +9,11 @@ namespace Controllers {
         [SerializeField] private FinishHole _finishHole;
         
         public Action OnBallFinished;
-        
+
+        private void Awake() {
+            _finishHole.OnBallInteraction += () => OnBallFinished?.Invoke();
+        }
+
         public void Init() {
             InitStartHole();
             InitFinishHole();
@@ -21,9 +25,10 @@ namespace Controllers {
         }
 
         private void InitFinishHole() {
+            _finishHole.Init();
+            
             var finishPosition = MazeController.Instance.GetFinishPosition();
             _finishHole.gameObject.transform.position = new Vector3(finishPosition.x, finishPosition.y, _finishHole.transform.position.z);
-            _finishHole.OnBallInteraction += () =>  OnBallFinished?.Invoke();
         }
     }
 }

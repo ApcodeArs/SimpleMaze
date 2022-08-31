@@ -66,6 +66,9 @@ namespace Controllers {
         private void CalculateMazeSize(SafeAreaWorldData safeAreaWorldData) {
             _mazeColumnsCount = Mathf.FloorToInt(safeAreaWorldData.Width / _cellSize.x);
             _mazeRowsCount = Mathf.FloorToInt(safeAreaWorldData.Height / _cellSize.y);
+            
+            //-1 due to fake cells
+            Debug.Log($"Maze size: {_mazeColumnsCount - 1 } x {_mazeRowsCount - 1}");
         }
         
         private void InitMazeParent(SafeAreaWorldData safeAreaWorldData) {
