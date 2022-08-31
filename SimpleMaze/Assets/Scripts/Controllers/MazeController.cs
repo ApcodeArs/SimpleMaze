@@ -15,12 +15,13 @@ namespace Controllers {
         private int _mazeRowsCount;
         private int _mazeColumnsCount;
         
-        private GameObject[,] _cells;
+        private MazeCell[,] _cells;
         
         private Vector3 _cellSize;
         private Vector3 _cellOffset;
 
         private MazeGenerator _mazeGenerator;
+        private Maze _maze;
         
         public void Init() {
             var safeAreaWorldData = new SafeAreaWorldData(_camera);
@@ -33,9 +34,30 @@ namespace Controllers {
             InitMazeParent(safeAreaWorldData);
             
             CalculateCellOffset();
-            
-            InitMaze();
         }
+
+        public void GenerateMaze() {
+            _maze = _mazeGenerator.Generate();
+
+            var isCreateNew = CreateCellsIfNeeded();
+
+            if (isCreateNew) {
+                _cells.Loop((x, y) => {
+                    InitNewCell(x, y, _maze.Cells[x, y]);
+                });
+            }
+            else {
+                _cells.Loop((x, y) => {
+                    InitCell(_cells[x, y], _maze.Cells[x, y]);
+                });
+            }
+        }
+        
+        public Vector3 GetStartPosition() => GetCellPosition(_maze.StartPosition);
+        
+        public Vector3 GetFinishPosition() => GetCellPosition(_maze.FinishPosition);
+
+        private Vector3 GetCellPosition(Vector2Int cell) => _cells[cell.x, cell.y].transform.position + _cellSize / 2;
 
         private void CalculateCellSize() {
             _cellSize = _cellPrefab.transform.localScale;
@@ -59,29 +81,12 @@ namespace Controllers {
             _cellOffset = _mazeParent.transform.position + new Vector3(-mazeParentSize.x / 2f, -mazeParentSize.y / 2f);
         }
         
-        private void InitMaze() {
-            var maze = _mazeGenerator.Generate();
-
-            var isCreateNew = CreateCellsIfNeeded();
-
-            if (isCreateNew) {
-                _cells.Loop((x, y) => {
-                    InitNewCell(x, y, maze.Cells[x, y]);
-                });
-            }
-            else {
-                _cells.Loop((x, y) => {
-                    InitCell(_cells[x, y], maze.Cells[x, y]);
-                });
-            }
-        }
-
         private bool CreateCellsIfNeeded() {
             if (_cells != null) {
                 return false;
             }
             
-            _cells = new GameObject[_mazeColumnsCount,_mazeRowsCount];
+            _cells = new MazeCell[_mazeColumnsCount,_mazeRowsCount];
             
             return true;
         }
@@ -90,15 +95,15 @@ namespace Controllers {
         private void InitNewCell(int x, int y, MazeCellData cellData) {
             var position = _cellOffset + new Vector3(x * _cellSize.x, y * _cellSize.y, 0.0f);
             var cellGameObject = Instantiate(_cellPrefab, position, Quaternion.identity, _mazeParent.transform);
+            var cell = cellGameObject.GetComponent<MazeCell>();
+            
+            InitCell(cell, cellData);
                     
-            InitCell(cellGameObject, cellData);
-                    
-            _cells[x, y] = cellGameObject;
+            _cells[x, y] = cell;
         }
         
         //todo improve
-        private void InitCell(GameObject cellGameObject, MazeCellData cellData) {
-            var cell = cellGameObject.GetComponent<MazeCell>();
+        private void InitCell(MazeCell cell, MazeCellData cellData) {
             cell.Init(cellData);
         }
     }
