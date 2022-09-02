@@ -1,13 +1,14 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Models.GameObjectModels {
-    public class FinishHole: MonoBehaviour {
+namespace Models.GameObjectModels.Holes {
+    public class FinishHole: DefaultHole {
         [SerializeField] private Collider2D _collider;
 
         public Action OnBallInteraction;
         
-        public void Init() {
+        public override void Init() {
+            base.Init();
             SetInteractive(true);
         }
 

@@ -1,11 +1,10 @@
 ﻿using System;
-using Models;
-using Models.GameObjectModels;
+using Models.GameObjectModels.Holes;
 using UnityEngine;
 
 namespace GameCore.Services {
     public class HolesService: MonoBehaviourCoreService {
-        [SerializeField] private GameObject _startHole;
+        [SerializeField] private DefaultHole _startHole;
         [SerializeField] private FinishHole _finishHole;
         
         public Action OnBallFinished;
@@ -24,15 +23,16 @@ namespace GameCore.Services {
         }
 
         private void InitStartHole() {
-            var startPosition = _mazeService.GetStartPosition();
-             _startHole.transform.position = new Vector3(startPosition.x, startPosition.y, _startHole.transform.position.z);
+            InitHole(_startHole, _mazeService.GetStartPosition());
         }
 
         private void InitFinishHole() {
-            _finishHole.Init();
-            
-            var finishPosition = _mazeService.GetFinishPosition();
-            _finishHole.gameObject.transform.position = new Vector3(finishPosition.x, finishPosition.y, _finishHole.transform.position.z);
+            InitHole(_finishHole, _mazeService.GetFinishPosition());
+        }
+
+        private void InitHole(DefaultHole hole, Vector3 position) {
+            hole.Init();
+            hole.transform.position = new Vector3(position.x, position.y, _startHole.transform.position.z);
         }
     }
 }
