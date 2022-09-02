@@ -1,21 +1,21 @@
-﻿using Controllers;
+﻿using GameCore.Services;
 using UnityEditor;
 using UnityEngine;
 
 namespace Helpers.Editor {
-    [CustomEditor(typeof(GameController))]
-    public class EditorGameController: UnityEditor.Editor {
-        private GameController _gameController;
+    [CustomEditor(typeof(GameService))]
+    public class EditorGameService: UnityEditor.Editor {
+        private GameService _gameService;
         
         public void Awake() {
-            _gameController = (GameController)target;
+            _gameService = (GameService)target;
         }
 
         public override void OnInspectorGUI() {
             EditorGUILayout.Space();
             
             if (Application.isPlaying && GUILayout.Button("Refresh")) {
-                _gameController.LoadLevel();
+                _gameService.LoadLevel();
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Models {
+namespace Models.GameObjectModels {
     public class FinishHole: MonoBehaviour {
         [SerializeField] private Collider2D _collider;
 

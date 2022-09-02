@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Models {
+namespace Models.GameObjectModels {
     public class Ball: MonoBehaviour {
         [SerializeField] private Rigidbody2D _rigidbody;
         

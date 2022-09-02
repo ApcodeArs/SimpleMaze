@@ -1,12 +1,11 @@
 using Extensions;
-using Helpers;
 using Models;
 using UnityEngine;
 using Utils;
 
-namespace Controllers {
+namespace GameCore.Services {
 
-    public class MazeController : MonoBehaviourSingletonBase<MazeController> {
+    public class MazeService : MonoBehaviourCoreService {
     
         [SerializeField] private Camera _camera;
         [SerializeField] private RectTransform _mazeParent;
@@ -23,7 +22,7 @@ namespace Controllers {
         private MazeGenerator _mazeGenerator;
         private Maze _maze;
         
-        public void Init() {
+        public override void Init() {
             var safeAreaWorldData = new SafeAreaWorldData(_camera);
             
             CalculateCellSize();

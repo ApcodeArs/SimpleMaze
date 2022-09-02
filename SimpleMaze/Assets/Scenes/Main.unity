@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 43416325}
   m_Layer: 0
-  m_Name: Controllers
+  m_Name: Services
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 1051443837}
   - component: {fileID: 1051443838}
   m_Layer: 0
-  m_Name: HolesController
+  m_Name: HolesService
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -384,7 +384,7 @@ GameObject:
   - component: {fileID: 1216583331}
   - component: {fileID: 1216583332}
   m_Layer: 0
-  m_Name: BallSpawnController
+  m_Name: BallSpawnService
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -552,7 +552,7 @@ GameObject:
   - component: {fileID: 1438282902}
   - component: {fileID: 1438282903}
   m_Layer: 0
-  m_Name: BackgroundController
+  m_Name: BackgroundService
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -637,7 +637,7 @@ GameObject:
   - component: {fileID: 1523059784}
   - component: {fileID: 1523059785}
   m_Layer: 0
-  m_Name: GameController
+  m_Name: GameService
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -823,7 +823,7 @@ GameObject:
   - component: {fileID: 1984258984}
   - component: {fileID: 1984258985}
   m_Layer: 0
-  m_Name: MazeController
+  m_Name: MazeService
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
