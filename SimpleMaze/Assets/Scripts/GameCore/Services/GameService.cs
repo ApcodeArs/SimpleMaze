@@ -13,6 +13,11 @@ namespace GameCore.Services {
             Core.Get<BallSpawnService>().SpawnOnStart();
             Core.Get<HolesService>().Init();
         }
+
+        public void RestartLevel() {
+            Debug.Log("Restart Level");
+            Core.Get<BallSpawnService>().SpawnOnStart();
+        }
         
         private void PrepareGame() {
             Core.Get<MazeService>().Init();

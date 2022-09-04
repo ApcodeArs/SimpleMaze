@@ -74,8 +74,11 @@ namespace GameCore.Services {
             //-1 due to fake cells
             _mazeParent.sizeDelta = new Vector2(_cellSize.x * (_mazeColumnsCount - 1), _cellSize.y * (_mazeRowsCount - 1));
             
+            var yShifting = (safeAreaWorldData.Height  - _mazeParent.sizeDelta.y) / 2;
+            
             _mazeParent.transform.position = new Vector3(safeAreaWorldData.MinPoint.x, safeAreaWorldData.MinPoint.y, 0.0f) + 
-                                             new Vector3(safeAreaWorldData.Width / 2, safeAreaWorldData.Height / 2, 0.0f);
+                                             new Vector3(safeAreaWorldData.Width / 2, safeAreaWorldData.Height / 2, 0.0f) +
+                                             new Vector3(0.0f, - yShifting, 0.0f);
         }
 
         private void CalculateCellOffset() {
