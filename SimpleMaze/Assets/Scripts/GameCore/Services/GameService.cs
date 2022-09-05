@@ -29,6 +29,7 @@ namespace GameCore.Services {
         
         private void OnLevelEnd() {
             Debug.Log("Level Complete!");
+            Core.Get<GameScoreService>().EarnOnLevelCompletePoints();
             Core.Get<GameDataService>().LevelUp();
             LoadLevel();
         }
