@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Extensions;
 using Models;
 using UnityEngine;
 
@@ -80,7 +81,7 @@ namespace Utils {
                 if (y < _height - 2 && !_cells[x, y + 1].IsVisited) unvisitedNeighbours.Add(_cells[x, y + 1]);
 
                 if (unvisitedNeighbours.Count > 0) {
-                    var chosen = unvisitedNeighbours[Random.Range(0, unvisitedNeighbours.Count)];
+                    var chosen = unvisitedNeighbours.RandomElement();
                     RemoveWall(current, chosen);
 
                     chosen.IsVisited = true;
@@ -105,7 +106,7 @@ namespace Utils {
             }
         }
         
-        private Vector2Int GetStartPosition() => _possibleStartPositions[Random.Range(0, _possibleStartPositions.Count)];
+        private Vector2Int GetStartPosition() => _possibleStartPositions.RandomElement();
         
         private Vector2Int GetFinishPosition() {
             var finishCell = _cells[_startPosition.x, _startPosition.y];

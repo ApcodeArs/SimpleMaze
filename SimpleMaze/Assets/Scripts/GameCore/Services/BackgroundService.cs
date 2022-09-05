@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Extensions;
 using UnityEngine;
 
 namespace GameCore.Services {
@@ -19,7 +20,7 @@ namespace GameCore.Services {
                 return;
             }
             
-            _colorsQueue = new Queue<Color>(_colors.OrderBy(color => Random.Range(0, int.MaxValue)));
+            _colorsQueue = new Queue<Color>(_colors.RandomSort());
         }
 
         private void ApplyColor() {
