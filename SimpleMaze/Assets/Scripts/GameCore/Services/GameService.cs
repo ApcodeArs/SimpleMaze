@@ -18,6 +18,8 @@ namespace GameCore.Services {
 
         public void RestartLevel() {
             Debug.Log("Restart Level");
+            
+            Core.Get<AudioService>().PlaySound("Restart", 0.0f, 0.5f);
             Core.Get<BallSpawnService>().SpawnOnStart();
         }
         
@@ -29,8 +31,11 @@ namespace GameCore.Services {
         
         private void OnLevelEnd() {
             Debug.Log("Level Complete!");
+            
+            Core.Get<AudioService>().PlaySound("Complete", 0.0f, 0.5f);
             Core.Get<GameScoreService>().EarnOnLevelCompletePoints();
             Core.Get<GameDataService>().LevelUp();
+            
             LoadLevel();
         }
     }
