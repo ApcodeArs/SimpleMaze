@@ -1,4 +1,4 @@
-﻿namespace Models {
+﻿namespace Models.GameData {
     public struct GameData {
         public static readonly GameData Default = new GameData(1, 0);
         

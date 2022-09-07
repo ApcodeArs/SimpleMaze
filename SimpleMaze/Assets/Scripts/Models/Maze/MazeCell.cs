@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Models {
+namespace Models.Maze {
     public class MazeCell : MonoBehaviour {
         [SerializeField] private GameObject _leftWall;
         [SerializeField] private GameObject _bottomWall;

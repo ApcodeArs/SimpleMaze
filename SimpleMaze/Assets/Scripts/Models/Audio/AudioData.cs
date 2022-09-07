@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Models {
+namespace Models.Audio {
     [Serializable]
     public class AudioData {
         public string Ident;

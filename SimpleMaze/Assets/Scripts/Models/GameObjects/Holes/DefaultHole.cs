@@ -1,7 +1,7 @@
 ﻿using Helpers;
 using UnityEngine;
 
-namespace Models.GameObjectModels.Holes {
+namespace Models.GameObjects.Holes {
     public class DefaultHole: MonoBehaviour {
         public virtual void Init() {
             InitRandomRotation();

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Models.GameObjectModels.Holes {
+namespace Models.GameObjects.Holes {
     public class FinishHole: DefaultHole {
         [SerializeField] private Collider2D _collider;
 

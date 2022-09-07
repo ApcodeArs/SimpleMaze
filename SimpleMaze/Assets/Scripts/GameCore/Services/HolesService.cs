@@ -1,5 +1,5 @@
 ﻿using System;
-using Models.GameObjectModels.Holes;
+using Models.GameObjects.Holes;
 using UnityEngine;
 
 namespace GameCore.Services {

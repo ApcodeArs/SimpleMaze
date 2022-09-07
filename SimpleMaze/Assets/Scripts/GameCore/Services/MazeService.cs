@@ -1,5 +1,6 @@
 using Extensions;
-using Models;
+using Models.SafeArea;
+using Models.Maze;
 using UnityEngine;
 using Utils;
 

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Models {
+namespace Models.Maze {
     public class Maze {
         public MazeCellData[,] Cells { get; }
         

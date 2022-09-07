@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Models {
+namespace Models.SafeArea {
     public class SafeAreaWorldData {
         public Vector3 MinPoint { get; }
         public Vector3 MaxPoint { get; }

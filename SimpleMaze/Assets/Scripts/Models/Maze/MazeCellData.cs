@@ -1,4 +1,4 @@
-﻿namespace Models {
+﻿namespace Models.Maze {
     public class MazeCellData {
         public int X { get; }
         public int Y { get; }
