@@ -1103,7 +1103,7 @@ PrefabInstance:
     - target: {fileID: 3281302034689122833, guid: 11743d65bf05ad14c83c237cd6d476c9, type: 3}
       propertyPath: _ballMovementController
       value: 
-      objectReference: {fileID: 1526305312}
+      objectReference: {fileID: 0}
     - target: {fileID: 3798801681697924233, guid: 11743d65bf05ad14c83c237cd6d476c9, type: 3}
       propertyPath: m_Name
       value: Ball
@@ -1152,19 +1152,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6546283210084537121, guid: 11743d65bf05ad14c83c237cd6d476c9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 11743d65bf05ad14c83c237cd6d476c9, type: 3}
---- !u!114 &1526305312 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6546283210084537121, guid: 11743d65bf05ad14c83c237cd6d476c9, type: 3}
-  m_PrefabInstance: {fileID: 1526305311}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 256979004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 367c492d6a3c459dbfb9db4bc76e892a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1532058767
 GameObject:
   m_ObjectHideFlags: 0

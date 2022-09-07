@@ -2,19 +2,18 @@
 using UnityEngine;
 
 namespace Models.GameObjects.Ball.MovementControllers {
-    public class BallMovementController: MonoBehaviour {
-
+    public class BallMovementController {
         private BaseMovementController _movementController;
-        
-        private void Awake() {
-            Init();
-        }
 
-        private void Init() {
+        public BallMovementController(GameObject target) {
+            Init(target);
+        }
+        
+        private void Init(GameObject target) {
 #if UNITY_STANDALONE || UNITY_WEBGL || UNITY_EDITOR
-            _movementController = gameObject.AddComponent<KeyboardMovementController>();
+            _movementController = target.AddComponent<KeyboardMovementController>();
 #elif UNITY_IOS
-            _movementController = gameObject.AddComponent<AccelerometerMovementController>();   
+            _movementController = target.AddComponent<AccelerometerMovementController>();   
 #else
             throw new Exception($"Ball movement not supported on the {Application.platform} platform");
 #endif
