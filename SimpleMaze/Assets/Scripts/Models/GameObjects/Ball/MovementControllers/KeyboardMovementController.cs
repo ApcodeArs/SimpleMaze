@@ -3,8 +3,6 @@
 namespace Models.GameObjects.Ball.MovementControllers {
     
     public class KeyboardMovementController : BaseMovementController {
-        private const int _speed = 5;
-
         private Vector2 _movementDirection;
         
         private void Update() {
@@ -35,7 +33,7 @@ namespace Models.GameObjects.Ball.MovementControllers {
         }
 
         private void ApplyMovement() {
-            Rigidbody.velocity = _movementDirection * _speed;
+            Rigidbody.velocity = _movementDirection * SpeedMultiplier;
         }
     }
 }
