@@ -1,8 +1,8 @@
 using Extensions;
+using GameCore.MazeGenerators;
 using Models.SafeArea;
 using Models.Maze;
 using UnityEngine;
-using Utils;
 
 namespace GameCore.Services {
 
@@ -20,7 +20,7 @@ namespace GameCore.Services {
         private Vector3 _cellSize;
         private Vector3 _cellOffset;
 
-        private MazeGenerator _mazeGenerator;
+        private SimpleMazeGenerator _simpleMazeGenerator;
         private Maze _maze;
         
         public override void Init() {
@@ -29,7 +29,7 @@ namespace GameCore.Services {
             CalculateCellSize();
             CalculateMazeSize(safeAreaWorldData);
             
-            _mazeGenerator = new MazeGenerator(_mazeColumnsCount, _mazeRowsCount);
+            _simpleMazeGenerator = new SimpleMazeGenerator(_mazeColumnsCount, _mazeRowsCount);
             
             InitMazeParent(safeAreaWorldData);
             
@@ -37,7 +37,7 @@ namespace GameCore.Services {
         }
 
         public void GenerateMaze() {
-            _maze = _mazeGenerator.Generate();
+            _maze = _simpleMazeGenerator.Generate();
 
             var isCreateNew = CreateCellsIfNeeded();
 

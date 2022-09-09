@@ -3,8 +3,8 @@ using Extensions;
 using Models.Maze;
 using UnityEngine;
 
-namespace Utils {
-    public class MazeGenerator {
+namespace GameCore.MazeGenerators {
+    public class SimpleMazeGenerator {
         private readonly MazeCellData[,] _cells;
         
         private readonly int _width;
@@ -13,7 +13,7 @@ namespace Utils {
         private List<Vector2Int> _possibleStartPositions;
         private Vector2Int _startPosition;
         
-        public MazeGenerator(int width, int height) {
+        public SimpleMazeGenerator(int width, int height) {
             _width = width;
             _height = height;
             
