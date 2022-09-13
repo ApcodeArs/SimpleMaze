@@ -24,6 +24,7 @@ namespace GameCore.Services {
         }
         
         private void PrepareGame() {
+            Core.Get<GameSettingsService>().Init();
             Core.Get<GameDataService>().Init();
             Core.Get<MazeService>().Init();
             Core.Get<HolesService>().OnBallFinished += OnLevelEnd;
