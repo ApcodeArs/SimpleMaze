@@ -35,5 +35,5 @@ This is Demo project for show different technoloches usage
 
 ## *Links*
 
-- *AppStore* (Coming soon)
+- *[AppStore](https://apps.apple.com/ru/app/easy-maze/id1644724411)*
 - *itch.io* (Coming soon)
