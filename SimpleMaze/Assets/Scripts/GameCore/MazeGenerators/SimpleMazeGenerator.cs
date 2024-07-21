@@ -37,10 +37,10 @@ namespace GameCore.MazeGenerators {
 
         private void InitPossibleStartPositions() {
             _possibleStartPositions = new List<Vector2Int>() {
-                new Vector2Int(0, 0),
-                new Vector2Int(_width - 2, 0),
-                new Vector2Int(0, _height - 2),
-                new Vector2Int(_width - 2, _height - 2)
+                new (0, 0),
+                new (_width - 2, 0),
+                new (0, _height - 2),
+                new (_width - 2, _height - 2)
             };
         }
         

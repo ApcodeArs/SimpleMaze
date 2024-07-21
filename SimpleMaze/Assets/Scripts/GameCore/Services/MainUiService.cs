@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using Models.GameData;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +8,7 @@ namespace GameCore.Services {
         [SerializeField] private TextMeshProUGUI _scoreLabel;
         [SerializeField] private TextMeshProUGUI _levelLabel;
         [SerializeField] private Button _restartButton;
-
+        
         private void Awake() {
             _restartButton.onClick.AddListener(OnRestartButtonClick);
         }
@@ -19,11 +20,19 @@ namespace GameCore.Services {
             InitScoreLabel(gameData.Score);
         }
 
+        public void UpdateScore()
+        {
+            var gameData = Core.Get<GameDataService>().GameData;
+            UpdateScoreLabel(gameData.Score);
+        }
+        
         private void InitLevelLabel(int level) {
             _levelLabel.text = $"Level {level}";
         }
 
-        private void InitScoreLabel(int score) {
+        private void InitScoreLabel(int score) => UpdateScoreLabel(score);
+        
+        private void UpdateScoreLabel(int score) {
             _scoreLabel.text = score.ToString();
         }
         

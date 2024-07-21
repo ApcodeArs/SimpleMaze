@@ -42,9 +42,9 @@ namespace GameCore.Services {
             _isChanged = true;
         }
         
-        public void AddPoints(int points) {
+        public void AddPoints(int points, bool isChanged = true) {
             _gameData.Score += points;
-            _isChanged = true;
+            _isChanged = isChanged;
         }
 
 #if UNITY_EDITOR  

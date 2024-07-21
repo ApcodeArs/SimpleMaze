@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1434fdf54bb14bf38fc6412b0a2a5413, type: 3}
-  m_Name: Points
+  m_Script: {fileID: 11500000, guid: b2603babce9844fc8a946f0fffaeaca3, type: 3}
+  m_Name: Coins
   m_EditorClassIdentifier: 
-  _levelComplete: 10
-  _coinCollect: 1
+  _mazeMinCoverage: 0.1
+  _mazeMaxCoverage: 0.4

@@ -7,7 +7,7 @@ namespace GameCore.Services {
         [SerializeField] private DefaultHole _startHole;
         [SerializeField] private FinishHole _finishHole;
         
-        public Action OnBallFinished;
+        public event Action OnBallFinished;
 
         private MazeService _mazeService;
         

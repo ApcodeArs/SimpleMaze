@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameCore {
     public class Core: MonoBehaviour {
-        private static readonly Dictionary<Type, MonoBehaviourCoreService> _services = new Dictionary<Type, MonoBehaviourCoreService>();
+        private static readonly Dictionary<Type, MonoBehaviourCoreService> _services = new();
         
         public static TService Get<TService>() where TService : MonoBehaviourCoreService, new() {
             var serviceType = typeof(TService);

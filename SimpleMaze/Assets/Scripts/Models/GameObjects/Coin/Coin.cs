@@ -1,14 +1,14 @@
-﻿using System;
+using System;
 using UnityEngine;
 
-namespace Models.GameObjects.Holes {
-    public class FinishHole: DefaultHole {
+namespace Models.GameObjects.Coin {
+    //todo move to common
+    public class Coin: MonoBehaviour {
         [SerializeField] private Collider2D _collider;
-
-        public event Action OnBallInteraction;
         
-        public override void Init() {
-            base.Init();
+        public event Action<Coin> OnBallInteraction;
+        
+        public void Init() {
             SetInteractive(true);
         }
 
@@ -18,7 +18,7 @@ namespace Models.GameObjects.Holes {
         
         private void OnCollisionEnter2D(Collision2D col) {
             SetInteractive(false);
-            OnBallInteraction?.Invoke();
+            OnBallInteraction?.Invoke(this);
         }
     }
 }

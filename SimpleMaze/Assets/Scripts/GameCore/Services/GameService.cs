@@ -13,6 +13,7 @@ namespace GameCore.Services {
             Core.Get<MazeService>().GenerateMaze();
             Core.Get<BallSpawnService>().SpawnOnStart();
             Core.Get<HolesService>().Init();
+            Core.Get<CoinsService>().Init();
             Core.Get<MainUiService>().Init();
         }
 

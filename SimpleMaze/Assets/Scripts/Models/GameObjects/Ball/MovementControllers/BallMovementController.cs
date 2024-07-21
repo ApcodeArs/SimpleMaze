@@ -16,7 +16,7 @@ namespace Models.GameObjects.Ball.MovementControllers {
             _movementController.Init(speedMultipliers.Keyboard);
 #elif UNITY_IOS
             _movementController = target.AddComponent<AccelerometerMovementController>();
-             _movementController.Init(speedMultipliers.Accelerometer);
+            _movementController.Init(speedMultipliers.Accelerometer);
 #else
             throw new Exception($"Ball movement not supported on the {Application.platform} platform");
 #endif

@@ -1,6 +1,6 @@
 ﻿namespace Models.GameData {
     public struct GameData {
-        public static readonly GameData Default = new GameData(1, 0);
+        public static readonly GameData Default = new(1, 0);
         
         public int Level { get; set; }
         public int Score { get; set; }
