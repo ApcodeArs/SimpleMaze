@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using Models.GameObjects.Coin;
+using ScriptableObjects;
 using UnityEngine;
 
 namespace GameCore.Services {
     public class CoinsService: MonoBehaviourCoreService {
+        [SerializeField] private Coins _coinsConfig;
+        
         [SerializeField] private Coin _coinPrefab; //todo
         
         [SerializeField] private List<Coin> _coins;
@@ -19,13 +22,13 @@ namespace GameCore.Services {
             coin.OnBallInteraction += OnBallInteraction;
         }
 
-        private void OnBallInteraction(Coin coin)
+        private void OnBallInteraction(GameObject coin)
         {
             Core.Get<GameScoreService>().EarnOnCoinCollectedPoints();
             Core.Get<MainUiService>().UpdateScore();
             
             //todo add sound
-            Destroy(coin.gameObject);
+            Destroy(coin);
         }
     }
 }

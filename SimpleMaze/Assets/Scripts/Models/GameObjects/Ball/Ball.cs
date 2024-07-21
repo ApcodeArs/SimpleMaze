@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Models.GameObjects.Ball {
     public class Ball: MonoBehaviour {
-        [SerializeField] private SpeedMultipliers _speedMultipliers; //todo move to BallMovementController
+        [SerializeField] private SpeedMultipliers _speedMultipliersConfig; //todo move to BallMovementController
         
         private BallMovementController _movementController;
 
@@ -13,7 +13,7 @@ namespace Models.GameObjects.Ball {
         }
 
         private void InitMovementController() {
-            _movementController = new BallMovementController(gameObject, _speedMultipliers);
+            _movementController = new BallMovementController(gameObject, _speedMultipliersConfig);
         }
     }
 }
