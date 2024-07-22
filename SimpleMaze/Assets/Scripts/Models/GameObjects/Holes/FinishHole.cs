@@ -1,4 +1,4 @@
 ﻿namespace Models.GameObjects.Holes {
-    public class FinishHole: BaseBallInteraction, IHole {
+    public class FinishHole: BaseBallInteractionObject {
     }
 }

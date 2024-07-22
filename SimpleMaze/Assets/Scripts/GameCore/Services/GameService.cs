@@ -13,7 +13,7 @@ namespace GameCore.Services {
             Core.Get<MazeService>().GenerateMaze();
             Core.Get<BallSpawnService>().SpawnOnStart();
             Core.Get<HolesService>().Init();
-            Core.Get<CoinsService>().Init();
+            Core.Get<CoinsService>().GenerateCoins();
             Core.Get<MainUiService>().Init();
         }
 
@@ -22,13 +22,18 @@ namespace GameCore.Services {
             
             Core.Get<AudioService>().PlaySound("Restart", 0.0f, 0.5f);
             Core.Get<BallSpawnService>().SpawnOnStart();
+            Core.Get<CoinsService>().GenerateCoins();
+            Core.Get<GameDataService>().Init(); // todo improve
+            Core.Get<MainUiService>().UpdateScore();
         }
         
         private void PrepareGame() {
             Core.Get<GameSettingsService>().Init();
             Core.Get<GameDataService>().Init();
             Core.Get<MazeService>().Init();
+            Core.Get<BallSpawnService>().Init();
             Core.Get<HolesService>().OnBallFinished += OnLevelEnd;
+            Core.Get<CoinsService>().Init();
         }
         
         private void OnLevelEnd() {

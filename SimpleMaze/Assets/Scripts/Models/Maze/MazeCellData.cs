@@ -10,6 +10,8 @@
 
         public int DistanceFromStart { get; set; }
 
+        public bool IsEmpty { get; set; } = true;
+        
         public MazeCellData(int x, int y) {
             X = x;
             Y = y;

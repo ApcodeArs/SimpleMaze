@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Models.GameObjects.Holes {
-    public class StartHole: MonoBehaviour, IHole {
+﻿namespace Models.GameObjects.Holes {
+    public class StartHole: BaseMazeObject {
     }
 }

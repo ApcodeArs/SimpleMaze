@@ -40,6 +40,8 @@ namespace GameCore.Services {
         public void LevelUp() {
             _gameData.Level++;
             _isChanged = true;
+            
+            Save();
         }
         
         public void AddPoints(int points, bool isChanged = true) {
@@ -58,6 +60,8 @@ namespace GameCore.Services {
             if (!_isChanged) {
                 return;
             }
+            
+            Debug.Log("Save Game Data");
             
             PlayerPrefs.SetInt(LevelKey, _gameData.Level);
             PlayerPrefs.SetInt(ScoreKey, _gameData.Score);

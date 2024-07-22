@@ -1,5 +1,6 @@
 ﻿using System;
 using Helpers;
+using Models.GameObjects;
 using Models.GameObjects.Holes;
 using UnityEngine;
 
@@ -17,23 +18,30 @@ namespace GameCore.Services {
         }
 
         public override void Init() {
-            _mazeService = Core.Get<MazeService>();
+            if (_mazeService == null) {
+                _mazeService = Core.Get<MazeService>();
+            }
             
             InitStartHole();
             InitFinishHole();
         }
-
+        
         private void InitStartHole() {
-            InitHole(_startHole.gameObject, _mazeService.GetStartPosition());
+            InitHole(_startHole, _mazeService.GetMazeStartCellPosition());
         }
 
         private void InitFinishHole() {
-            InitHole(_finishHole.gameObject, _mazeService.GetFinishPosition());
+            InitHole(_finishHole, _mazeService.GetMazeFinishCellPosition());
         }
 
-        private void InitHole(GameObject hole, Vector3 position) {
-            InitHolePosition(hole.transform, position);
-            InitHoleRotation(hole.transform);
+        private void InitHole(BaseMazeObject hole, Vector2Int mazeCellPosition) {
+            var cellPosition = _mazeService.GetCellPosition(mazeCellPosition);
+            
+            InitHolePosition(hole.gameObject.transform, cellPosition);
+            InitHoleRotation(hole.gameObject.transform);
+            
+            hole.Init(mazeCellPosition);
+            _mazeService.SetMazeCell(hole.MazePosition);
         }
 
         private void InitHolePosition(Transform holeTransform, Vector3 position) {

@@ -5,6 +5,8 @@ namespace GameCore.Services {
     public class GameScoreService: MonoBehaviourCoreService {
         [SerializeField] private Points _pointsConfig;
 
+        //todo cache services
+        
         public void EarnOnLevelCompletePoints() {
             Core.Get<GameDataService>().AddPoints(_pointsConfig.LevelComplete);
         }

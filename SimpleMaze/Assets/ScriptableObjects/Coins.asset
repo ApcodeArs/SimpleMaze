@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2603babce9844fc8a946f0fffaeaca3, type: 3}
   m_Name: Coins
   m_EditorClassIdentifier: 
-  _mazeMinCoverage: 0.1
-  _mazeMaxCoverage: 0.4
+  _mazeMinCoverage: 0.075
+  _mazeMaxCoverage: 0.15

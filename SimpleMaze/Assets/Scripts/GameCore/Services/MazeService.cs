@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Extensions;
 using GameCore.MazeGenerators;
 using Models.SafeArea;
@@ -10,7 +12,7 @@ namespace GameCore.Services {
     
         [SerializeField] private Camera _camera;
         [SerializeField] private RectTransform _mazeParent;
-        [SerializeField] private GameObject _cellPrefab;
+        [SerializeField] private MazeCell _mazeCellPrefab;
         
         private int _mazeRowsCount;
         private int _mazeColumnsCount;
@@ -22,6 +24,15 @@ namespace GameCore.Services {
 
         private SimpleMazeGenerator _simpleMazeGenerator;
         private Maze _maze;
+        
+        public int GetCellsCount => (_mazeColumnsCount - 1) * (_mazeRowsCount - 1);
+        
+        public Vector2Int GetMazeStartCellPosition() => new(_maze.StartPosition.x, _maze.StartPosition.y);
+        
+        public Vector2Int GetMazeFinishCellPosition() => new(_maze.FinishPosition.x, _maze.FinishPosition.y);
+
+        public Vector3 GetCellPosition(Vector2Int mazeCellPosition) =>
+            _cells[mazeCellPosition.x, mazeCellPosition.y].transform.position + _cellSize / 2;
         
         public override void Init() {
             var safeAreaWorldData = new SafeAreaWorldData(_camera);
@@ -53,14 +64,20 @@ namespace GameCore.Services {
             }
         }
         
-        public Vector3 GetStartPosition() => GetCellPosition(_maze.StartPosition);
+        public List<Vector2Int> GetMazeEmptyCellsPositions() {
+            var emptyCells = _maze.Cells.Cast<MazeCellData>()
+                .Where(c => c.X != _mazeColumnsCount - 1 && c.Y != _mazeRowsCount - 1 && c.IsEmpty)
+                .Select(c=>new Vector2Int(c.X, c.Y)).ToList();
+            
+            return emptyCells;
+        }
         
-        public Vector3 GetFinishPosition() => GetCellPosition(_maze.FinishPosition);
-
-        private Vector3 GetCellPosition(Vector2Int cell) => _cells[cell.x, cell.y].transform.position + _cellSize / 2;
-
+        public void SetMazeCell(Vector2Int mazePosition, bool isEmpty = false) {
+            _maze.Cells[mazePosition.x, mazePosition.y].IsEmpty = isEmpty;
+        }
+        
         private void CalculateCellSize() {
-            _cellSize = _cellPrefab.transform.localScale;
+            _cellSize = _mazeCellPrefab.gameObject.transform.localScale;
         }
         
         private void CalculateMazeSize(SafeAreaWorldData safeAreaWorldData) {
@@ -68,7 +85,7 @@ namespace GameCore.Services {
             _mazeRowsCount = Mathf.FloorToInt(safeAreaWorldData.Height / _cellSize.y);
             
             //-1 due to fake cells
-            Debug.Log($"Maze size: {_mazeColumnsCount - 1 } x {_mazeRowsCount - 1}");
+            Debug.Log($"Maze size: {_mazeColumnsCount - 1} x {_mazeRowsCount - 1}");
         }
         
         private void InitMazeParent(SafeAreaWorldData safeAreaWorldData) {
@@ -96,19 +113,15 @@ namespace GameCore.Services {
             
             return true;
         }
-
-        //todo improve
+        
         private void InitNewCell(int x, int y, MazeCellData cellData) {
             var position = _cellOffset + new Vector3(x * _cellSize.x, y * _cellSize.y, 0.0f);
-            var cellGameObject = Instantiate(_cellPrefab, position, Quaternion.identity, _mazeParent.transform);
-            var cell = cellGameObject.GetComponent<MazeCell>();
+            var cell = Instantiate(_mazeCellPrefab, position, Quaternion.identity, _mazeParent.transform);
             
             InitCell(cell, cellData);
-                    
             _cells[x, y] = cell;
         }
         
-        //todo improve
         private void InitCell(MazeCell cell, MazeCellData cellData) {
             cell.Init(cellData);
         }
