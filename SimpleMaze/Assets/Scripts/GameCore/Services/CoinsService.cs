@@ -76,7 +76,7 @@ namespace GameCore.Services {
             _gameScoreService.EarnOnCoinCollectedPoints();
             _mainUiService.UpdateScore();
             
-            //todo add sound
+            Core.Get<AudioService>().PlaySound("Coin");
             ResetCoin(ballInteractionObject);
         }
 
