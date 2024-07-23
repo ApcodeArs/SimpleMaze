@@ -41,8 +41,10 @@ namespace GameCore.Services {
             }
         }
         
-        public void GenerateCoins() {
-            ResetCoins(); //todo improve
+        public void GenerateCoins(bool isNeedReset = true) {
+            if (isNeedReset) {
+                ResetCoins();
+            }
             
             var coinsRandomCoverage = Random.Range(_coinsConfig.MazeMinCoverage, _coinsConfig.MazeMaxCoverage);
             Debug.Log($"Coins coverage: {coinsRandomCoverage:F4}");

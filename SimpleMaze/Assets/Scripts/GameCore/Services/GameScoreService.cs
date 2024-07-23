@@ -4,15 +4,19 @@ using UnityEngine;
 namespace GameCore.Services {
     public class GameScoreService: MonoBehaviourCoreService {
         [SerializeField] private Points _pointsConfig;
-
-        //todo cache services
         
+        private GameDataService _gameDataService;
+        
+        public override void Init() {
+            _gameDataService = Core.Get<GameDataService>();
+        }
+
         public void EarnOnLevelCompletePoints() {
-            Core.Get<GameDataService>().AddPoints(_pointsConfig.LevelComplete);
+            _gameDataService.AddPoints(_pointsConfig.LevelComplete);
         }
 
         public void EarnOnCoinCollectedPoints() {
-            Core.Get<GameDataService>().AddPoints(_pointsConfig.CoinCollect, false);
+            _gameDataService.AddPoints(_pointsConfig.CoinCollect, false);
         }
     }
 }

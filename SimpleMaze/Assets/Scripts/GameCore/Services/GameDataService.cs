@@ -27,16 +27,15 @@ namespace GameCore.Services {
         
         public override void Init() {
             _gameData = GameData.Default;
-            
-            if (PlayerPrefs.HasKey(LevelKey)) {
-                _gameData.Level = PlayerPrefs.GetInt(LevelKey);
-            }
 
-            if (PlayerPrefs.HasKey(ScoreKey)) {
-                _gameData.Score = PlayerPrefs.GetInt(ScoreKey);
-            }
+            TryLoadLevel();
+            TryLoadScore();
         }
 
+        public void ResetLevelScore() {
+            TryLoadScore();
+        }
+        
         public void LevelUp() {
             _gameData.Level++;
             _isChanged = true;
@@ -48,13 +47,32 @@ namespace GameCore.Services {
             _gameData.Score += points;
             _isChanged = isChanged;
         }
-
+        
 #if UNITY_EDITOR  
         public void Reset() {
             Debug.Log("Reset Game Data");
             PlayerPrefs.DeleteAll();
         }
 #endif
+        
+        private bool TryLoadLevel() {
+            if (!PlayerPrefs.HasKey(LevelKey)) {
+                return false;
+            }
+            
+            _gameData.Level = PlayerPrefs.GetInt(LevelKey);
+            return true;
+
+        }
+
+        private bool TryLoadScore() {
+            if (!PlayerPrefs.HasKey(ScoreKey)) {
+                return false;
+            }
+            
+            _gameData.Score = PlayerPrefs.GetInt(ScoreKey);
+            return true;
+        }
         
         private void Save() {
             if (!_isChanged) {

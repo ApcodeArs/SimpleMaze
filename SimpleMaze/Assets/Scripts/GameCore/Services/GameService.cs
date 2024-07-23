@@ -5,15 +5,15 @@ namespace GameCore.Services {
 
         private void Start() {
             PrepareGame();
-            LoadLevel();
+            LoadLevel(true);
         }
         
-        public void LoadLevel() {
+        public void LoadLevel(bool isFirstLoading = false) {
             Core.Get<BackgroundService>().Init();
             Core.Get<MazeService>().GenerateMaze();
             Core.Get<BallSpawnService>().SpawnOnStart();
             Core.Get<HolesService>().Init();
-            Core.Get<CoinsService>().GenerateCoins();
+            Core.Get<CoinsService>().GenerateCoins(!isFirstLoading);
             Core.Get<MainUiService>().Init();
         }
 
@@ -23,7 +23,7 @@ namespace GameCore.Services {
             Core.Get<AudioService>().PlaySound("Restart", 0.0f, 0.5f);
             Core.Get<BallSpawnService>().SpawnOnStart();
             Core.Get<CoinsService>().GenerateCoins();
-            Core.Get<GameDataService>().Init(); // todo improve
+            Core.Get<GameDataService>().ResetLevelScore();
             Core.Get<MainUiService>().UpdateScore();
         }
         
@@ -34,6 +34,7 @@ namespace GameCore.Services {
             Core.Get<BallSpawnService>().Init();
             Core.Get<HolesService>().OnBallFinished += OnLevelEnd;
             Core.Get<CoinsService>().Init();
+            Core.Get<GameScoreService>().Init();
         }
         
         private void OnLevelEnd() {
