@@ -848,11 +848,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _clips:
-  - Ident: Restart
+  - Ident: 0
     Source: {fileID: 8300000, guid: 44d9ba6b04493c549aec46a7c7335a3d, type: 3}
-  - Ident: Complete
+  - Ident: 1
     Source: {fileID: 8300000, guid: 40e36504acbe5594cad54a9800d40a7f, type: 3}
-  - Ident: Coin
+  - Ident: 2
     Source: {fileID: 8300000, guid: 90de65da64f2b47df80c253398aad6d0, type: 3}
 --- !u!1 &1051443836
 GameObject:

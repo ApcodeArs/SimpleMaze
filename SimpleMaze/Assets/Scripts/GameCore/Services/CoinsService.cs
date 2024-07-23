@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Extensions;
+using Models.Audio;
 using Models.GameObjects;
 using Models.GameObjects.Coin;
 using ScriptableObjects;
@@ -76,7 +77,7 @@ namespace GameCore.Services {
             _gameScoreService.EarnOnCoinCollectedPoints();
             _mainUiService.UpdateScore();
             
-            Core.Get<AudioService>().PlaySound("Coin");
+            Core.Get<AudioService>().PlaySound(SoundId.Coin);
             ResetCoin(ballInteractionObject);
         }
 

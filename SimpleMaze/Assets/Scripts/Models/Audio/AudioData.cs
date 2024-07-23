@@ -2,9 +2,15 @@
 using UnityEngine;
 
 namespace Models.Audio {
+    public enum SoundId {
+        Restart,
+        Complete,
+        Coin
+    }
+    
     [Serializable]
     public class AudioData {
-        public string Ident;
+        public SoundId Ident;
         public AudioClip Source;
     }
 }

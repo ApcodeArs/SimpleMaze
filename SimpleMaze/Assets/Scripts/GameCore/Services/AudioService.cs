@@ -8,7 +8,7 @@ namespace GameCore.Services {
         //todo change to custom serialized dictionary
         [SerializeField] private List<AudioData> _clips;
 
-        public void PlaySound(string ident, float delay = 0, float volume = 1, bool isLoop = false) {
+        public void PlaySound(SoundId ident, float delay = 0, float volume = 1, bool isLoop = false) {
             var clip = FindClip(ident);
 
             if (clip == null) {
@@ -20,7 +20,7 @@ namespace GameCore.Services {
             Play(audioSource, delay);
         }
 
-        private AudioClip FindClip(string ident) {
+        private AudioClip FindClip(SoundId ident) {
             var clipData = _clips.FirstOrDefault(audioData => audioData.Ident.Equals(ident));
             return clipData?.Source;
         }
