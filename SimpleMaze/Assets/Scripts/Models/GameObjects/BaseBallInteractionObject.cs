@@ -18,8 +18,12 @@ namespace Models.GameObjects {
             _collider.enabled = isActive;
         }
         
-        private void OnCollisionEnter2D(Collision2D col) {
-            if (!col.gameObject.name.Equals(GameObjectBallName)) {
+        private void OnCollisionEnter2D(Collision2D col) => OnInteract(col.gameObject);
+
+        private void OnTriggerEnter2D(Collider2D other) => OnInteract(other.gameObject);
+        
+        private void OnInteract(GameObject other) {
+            if (!other.name.Equals(GameObjectBallName)) {
                 return;
             }
             
