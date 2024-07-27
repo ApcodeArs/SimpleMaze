@@ -4,15 +4,15 @@ This is Demo project for show different technoloches usage
 
 ## *Features*
 
-- procedurally generated mazes
-- infinite number of levels
+- Procedurally generated mazes and coins
+- Infinite number of levels
 
 ## *Technologies*
 
 ### *Design patterns*
 
 - Service Locator (as main project structure)
-- Object Pool (for maze's gameObjects)
+- Object Pool (for maze's and coin's gameObjects)
 - Component pattern (for different types of ball control)
 - Data Locality (everywhere)
 - Dirty Flag (for data saving)
@@ -25,6 +25,7 @@ This is Demo project for show different technoloches usage
 - ScriptableOblects (for easy data setting)
 - PlayerPrefs (for data storage)
 - UnityEditor (for useful editor extension tools)
+- Spritesheet animations (for coin animation)
 - etc.
 
 ### *Other*
@@ -36,4 +37,3 @@ This is Demo project for show different technoloches usage
 ## *Links*
 
 - *[AppStore](https://apps.apple.com/ru/app/easy-maze/id1644724411)*
-- *itch.io* (Coming soon)
